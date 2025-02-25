@@ -11,7 +11,7 @@ You can implement a simple model which does one of the following:
    in line) or randomly selecting people to be in contact (just do one of these for your model).
 
 2. Take the "handshake" simulation code as your model, but make it so you can recover from the disease. How does the
-spread of the disease change when you set people to recover after a set number of days.
+spread of the disease change when you set people to recover after a set number of days. 
 
 3. Add a "quarantine" percentage to the handshake model: if a person is infected, they have a chance of being quarantined
 and not interacting with others in each round.
@@ -21,11 +21,11 @@ and not interacting with others in each round.
 /**
  * Authors: 
  * 
- * What we are simulating:
+ * What we are simulating: we are simulating a recovery time where the person is able to recover from the virus within 3 days
  * 
- * What elements we have to add:
+ * What elements we have to add: set value for the recover time which is 3 days or 3 rounds 
  * 
- * In plain language, what our model does:
+ * In plain language, what our model does: shows a virus that has a chance of being distributed and a recovery time of it for 3 days
  * 
  */
 
@@ -117,21 +117,5 @@ export const computeStatistics = (population, round) => {
     }
   }
   return { round, infected };
-};
-
-
-// Example: Compute stats (students customize)
-export const computeStatistics = (population, round) => {
-  let infected = 0;
-  let newlyInfected = 0;
-  for (let p of population) {
-    if (p.infected) {
-      infected += 1; // Count the infected
-    }
-    if (p.newlyInfected) {
-      newlyInfected += 1; // Count the newly infected
-    }
-  }
-  return { round, infected, newlyInfected };
 };
 
