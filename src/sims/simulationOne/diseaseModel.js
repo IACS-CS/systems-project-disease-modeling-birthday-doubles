@@ -4,7 +4,7 @@ import { shufflePopulation } from "../../lib/shufflePopulation";
 
 export const defaultSimulationParameters = {
   infectionChance: 50,
-  recoveryTime: 7, // 3 rounds for recovery
+  recoveryTime: 3, // 7 rounds for recovery
   // Add any new parameters you want here with their initial values
   //  -- you will also have to add inputs into your jsx file if you want
   // your user to be able to change these parameters.
@@ -53,21 +53,6 @@ const updateIndividual = (person, contact, params) => {
   }
 };
 
-// Example: Update population (students decide what happens each turn)
-export const updatePopulation = (population, params) => {
-  // Include "shufflePopulation" if you want to shuffle...
-  // population = shufflePopulation(population);
-  // Example logic... each person is in contact with the person next to them...
-  for (let i = 0; i < population.length; i++) {
-    let p = population[i];
-    // This logic just grabs the next person in line -- you will want to 
-    // change this to fit your model!
-    let contact = population[(i + 1) % population.length];
-    // Update the individual based on the contact...
-    updateIndividual(p, contact, params);
-  }
-  return population;
-};
 
 // Stats to track (students can add more)
 // Any stats you add here should be computed by Compute Stats below
@@ -84,4 +69,19 @@ export const computeStatistics = (population, round) => {
     }
   }
   return { round, infected };
+};
+
+export const updatePopulation = (population, params) => {
+  // Include "shufflePopulation if you want to shuffle...
+  // population = shufflePopulation(population);
+  population = shufflePopulation(population)
+ 
+  for (let i = 0; i < population.length; i += 2) {
+    let p1 = population[i];
+    let p2 = population[i + 1] || population[0];
+
+    updateIndividual(p1, p2, params);
+    updateIndividual(p2, p1, params);
+  }
+  return population;
 };

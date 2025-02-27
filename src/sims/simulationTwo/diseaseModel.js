@@ -25,19 +25,19 @@ import { shufflePopulation } from "../../lib/shufflePopulation";
 */
 
 /**
- * Authors: 
+ * Authors: negga and tron 
  * 
- * What we are simulating:
+ * What we are simulating: Different applications of different diseases 
  * 
- * What we are attempting to model from the real world:
+ * What we are attempting to model from the real world: 
  * 
  * What we are leaving out of our model:
  * 
- * What elements we have to add:
+ * What elements we have to add: A chance for immunity, recovery phase, antibodies, a death rate.
  * 
- * What parameters we will allow users to "tweak" to adjust the model:
+ * What parameters we will allow users to "tweak" to adjust the model: Death Rate, Time for recovery per patient
  * 
- * In plain language, what our model does:
+ * In plain language, what our model does: Simulates the spreading of our disease with factors from other real life-diseases. Death rate and recovery process will be altered by the user.
  * 
  */
 
@@ -81,10 +81,7 @@ export const createPopulation = (size = 1600) => {
 
 
 // Example: Update population (students decide what happens each turn)
-export const updatePopulation = (population, params) => {
-  // Figure out your logic here...
-  return population;
-};
+
 
 // Stats to track (students can add more)
 // Any stats you add here should be computed
@@ -95,7 +92,7 @@ export const trackedStats = [
 
 // Example: Compute stats (students customize)
 export const computeStatistics = (population, round) => {
-  let infected = 0;
+  let infected = 1;
   for (let p of population) {
     if (p.infected) {
       infected += 1; // Count the infected
@@ -105,3 +102,17 @@ export const computeStatistics = (population, round) => {
 };
 
 
+export const updatePopulation = (population, params) => {
+  // Include "shufflePopulation if you want to shuffle...
+  // population = shufflePopulation(population);
+  population = shufflePopulation(population)
+ 
+  for (let i = 0; i < population.length; i += 2) {
+    let p1 = population[i];
+    let p2 = population[i + 1] || population[0];
+
+    updateIndividual(p1, p2, params);
+    updateIndividual(p2, p1, params);
+  }
+  return population;
+};
