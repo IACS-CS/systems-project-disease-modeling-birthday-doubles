@@ -29,15 +29,15 @@ import { shufflePopulation } from "../../lib/shufflePopulation";
  * 
  * What we are simulating: Different applications of different diseases 
  * 
- * What we are attempting to model from the real world: 
+ * What we are attempting to model from the real world: rabies
  * 
- * What we are leaving out of our model:
+ * What we are leaving out of our model: how you obtain it to begin with 
  * 
  * What elements we have to add: A chance for immunity, recovery phase, antibodies, a death rate.
  * 
  * What parameters we will allow users to "tweak" to adjust the model: Death Rate, Time for recovery per patient
  * 
- * In plain language, what our model does: Simulates the spreading of our disease with factors from other real life-diseases. Death rate and recovery process will be altered by the user.
+ * In plain language, what our model does: Simulates the rabies disease 
  * 
  */
 
@@ -46,6 +46,8 @@ import { shufflePopulation } from "../../lib/shufflePopulation";
 // will be passed to your disease model when it runs.
 
 export const defaultSimulationParameters = {
+  infectionChance: 50,
+  recoveryTime: 3
   // Add any parameters you want here with their initial values
   //  -- you will also have to add inputs into your jsx file if you want
   // your user to be able to change these parameters.
