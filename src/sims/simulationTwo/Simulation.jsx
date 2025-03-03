@@ -143,6 +143,40 @@ const Simulation = () => {
               />
             </div>
           </label>
+          <label>
+            Infection Chance:
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value={simulationParameters.infectionChance}
+              onChange={(e) =>
+                setSimulationParameters({
+                  ...simulationParameters,
+                  infectionChance: parseFloat(e.target.value),
+                })
+              }
+            />
+            {simulationParameters.infectionChance}%
+          </label>
+          <label>
+            FATALITY Chance:
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value={simulationParameters.fatalityRate}
+              onChange={(e) =>
+                setSimulationParameters({
+                  ...simulationParameters,
+                  fatalityRate: parseFloat(e.target.value),
+                })
+              }
+            />
+            {simulationParameters.fatalityRate}%
+          </label>
         </div>
       </section>
 

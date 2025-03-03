@@ -45,13 +45,6 @@ import { shufflePopulation } from "../../lib/shufflePopulation";
 // Default parameters -- any properties you add here
 // will be passed to your disease model when it runs.
 
-export const defaultSimulationParameters = {
-  infectionChance: 50,
-  recoveryTime: 3
-  // Add any parameters you want here with their initial values
-  //  -- you will also have to add inputs into your jsx file if you want
-  // your user to be able to change these parameters.
-};
 
 /* Creates your initial population. By default, we *only* track whether people
 are infected. Any other attributes you want to track would have to be added
@@ -63,52 +56,56 @@ to add a property such as daysInfected which tracks how long they've been infect
 
 Similarily, if you wanted to track immunity, you would need a property that shows
 whether people are susceptible or immune (i.e. succeptibility or immunity) */
+
+
+export const defaultSimulationParameters = {
+  infectionChance: 50, // Chance of transmission per encounter
+  recoveryTime: 3, // Not relevant for rabies but kept for potential expansion
+  incubationPeriod: 10, // Days before symptoms appear
+  fatalityRate: 99.9, // Rabies is nearly always fatal once symptomatic
+  vaccinationRate: 30, // Percentage of population vaccinated
+  vaccineEffectiveness: 90, // How effective the vaccine is
+};
+
 export const createPopulation = (size = 1600) => {
   const population = [];
   const sideSize = Math.sqrt(size);
   for (let i = 0; i < size; i++) {
     population.push({
       id: i,
-      x: (100 * (i % sideSize)) / sideSize, // X-coordinate within 100 units
-      y: (100 * Math.floor(i / sideSize)) / sideSize, // Y-coordinate scaled similarly
+      x: (100 * (i % sideSize)) / sideSize,
+      y: (100 * Math.floor(i / sideSize)) / sideSize,
       infected: false,
+      daysInfected: 0,
+      symptomatic: false,
+      deceased: false,
+      vaccinated: Math.random() * 100 < defaultSimulationParameters.vaccinationRate,
     });
   }
-  // Infect patient zero...
   let patientZero = population[Math.floor(Math.random() * size)];
   patientZero.infected = true;
   return population;
 };
 
-
-
-// Example: Update population (students decide what happens each turn)
-
-
-// Stats to track (students can add more)
-// Any stats you add here should be computed
-// by Compute Stats below
 export const trackedStats = [
   { label: "Total Infected", value: "infected" },
+  { label: "Symptomatic Cases", value: "symptomatic" },
+  { label: "Deceased", value: "deceased" },
 ];
 
-// Example: Compute stats (students customize)
 export const computeStatistics = (population, round) => {
-  let infected = 1;
+  let infected = 0, symptomatic = 0, deceased = 0;
   for (let p of population) {
-    if (p.infected) {
-      infected += 1; // Count the infected
-    }
+    if (p.infected) infected++;
+    if (p.symptomatic) symptomatic++;
+    if (p.deceased) deceased++;
   }
-  return { round, infected };
+  return { round, infected, symptomatic, deceased };
 };
 
-
 export const updatePopulation = (population, params) => {
-  // Include "shufflePopulation if you want to shuffle...
-  // population = shufflePopulation(population);
-  population = shufflePopulation(population)
- 
+  population = shufflePopulation(population);
+
   for (let i = 0; i < population.length; i += 2) {
     let p1 = population[i];
     let p2 = population[i + 1] || population[0];
@@ -117,4 +114,24 @@ export const updatePopulation = (population, params) => {
     updateIndividual(p2, p1, params);
   }
   return population;
+};
+
+const updateIndividual = (person, other, params) => {
+  if (person.deceased) return;
+
+  if (person.infected) {
+    person.daysInfected++;
+    if (person.daysInfected >= params.incubationPeriod) {
+      person.symptomatic = true;
+      if (Math.random() * 100 < params.fatalityRate) {
+        person.deceased = true;
+      }
+    }
+  }
+
+  if (!person.infected && other.infected && !other.deceased && Math.random() * 100 < params.infectionChance) {
+    if (!person.vaccinated || Math.random() * 100 > params.vaccineEffectiveness) {
+      person.infected = true;
+    }
+  }
 };
