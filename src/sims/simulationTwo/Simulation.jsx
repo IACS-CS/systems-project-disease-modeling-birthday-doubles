@@ -23,12 +23,14 @@ const renderPatients = (population) => {
   }
 
   function renderEmoji(p) {
-    if (p.newlyInfected) {
-      return "🤧"; // Sneezing Face for new cases
+    if (p.deceased) {
+      return "💀";
+    } else if (p.newlyInfected) {
+      return "🤧";
     } else if (p.infected) {
-      return "🤢"; // Vomiting Face for already sick
+      return "🤢";
     } else {
-      return "😀"; // Healthy person
+      return "😀";
     }
   }
 
