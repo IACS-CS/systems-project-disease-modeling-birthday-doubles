@@ -78,6 +78,9 @@ const Simulation = () => {
     defaultSimulationParameters
   );
 
+
+  
+
   // Runs a single simulation step
   const runTurn = () => {
     let newPopulation = updatePopulation([...population], simulationParameters);
@@ -176,6 +179,57 @@ const Simulation = () => {
               }
             />
             {simulationParameters.fatalityRate}%
+          </label>
+          <label>
+          incubationPeriod
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value={simulationParameters.incubationPeriod}
+              onChange={(e) =>
+                setSimulationParameters({
+                  ...simulationParameters,
+                  incubationPeriod: parseFloat(e.target.value),
+                })
+              }
+            />
+            {simulationParameters.incubationPeriod}%
+          </label> 
+          <label>
+          vaccinationRate:
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value={simulationParameters.vaccinationRate}
+              onChange={(e) =>
+                setSimulationParameters({
+                  ...simulationParameters,
+                  vaccinationRate: parseFloat(e.target.value),
+                })
+              }
+            />
+            {simulationParameters.vaccinationRate}%
+          </label>
+          <label>
+          vaccineEffectiveness:
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value={simulationParameters.vaccineEffectiveness}
+              onChange={(e) =>
+                setSimulationParameters({
+                  ...simulationParameters,
+                  vaccineEffectiveness: parseFloat(e.target.value),
+                })
+              }
+            />
+            {simulationParameters.vaccineEffectiveness}%
           </label>
         </div>
       </section>
