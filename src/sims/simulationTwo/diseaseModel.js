@@ -1,4 +1,7 @@
 import { shufflePopulation } from "../../lib/shufflePopulation";
+//Credit to Mason Cayer and Ryan Dean for helping us with adding a shuffled population
+//Credit to ChatGPT for helping us tweak code, fix syntax errors, etc.
+
 
 /* Update this code to simulate a simple disease model! */
 

@@ -1,3 +1,6 @@
+//Credit to Github Copilot for helping me impliment the skull emoji for the deceased patients
+
+
 import React, { useEffect, useState } from "react";
 import {
   createPopulation,
