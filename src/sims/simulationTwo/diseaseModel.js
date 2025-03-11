@@ -1,4 +1,7 @@
 import { shufflePopulation } from "../../lib/shufflePopulation";
+//Credit to Mason Cayer and Ryan Dean for helping us with adding a shuffled population
+//Credit to ChatGPT for helping us tweak code, fix syntax errors, etc.
+
 
 /* Update this code to simulate a simple disease model! */
 
@@ -60,7 +63,7 @@ whether people are susceptible or immune (i.e. succeptibility or immunity) */
 
 export const defaultSimulationParameters = {
   infectionChance: 50, // Chance of transmission per encounter
-  recoveryTime: 3, // Not relevant for rabies but kept for potential expansion
+  recoveryTime: 14, // Not relevant for rabies but kept for potential expansion
   incubationPeriod: 10, // Days before symptoms appear
   fatalityRate: 99.9, // Rabies is nearly always fatal once symptomatic
   vaccinationRate: 30, // Percentage of population vaccinated

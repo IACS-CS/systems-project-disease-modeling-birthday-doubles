@@ -1,3 +1,6 @@
+//Credit to Github Copilot for helping me impliment the skull emoji for the deceased patients
+
+
 import React, { useEffect, useState } from "react";
 import {
   createPopulation,
@@ -23,12 +26,14 @@ const renderPatients = (population) => {
   }
 
   function renderEmoji(p) {
-    if (p.newlyInfected) {
-      return "🤧"; // Sneezing Face for new cases
+    if (p.deceased) {
+      return "💀";
+    } else if (p.newlyInfected) {
+      return "🤧";
     } else if (p.infected) {
-      return "🤢"; // Vomiting Face for already sick
+      return "🤢";
     } else {
-      return "😀"; // Healthy person
+      return "😀";
     }
   }
 
@@ -77,6 +82,9 @@ const Simulation = () => {
   const [simulationParameters, setSimulationParameters] = useState(
     defaultSimulationParameters
   );
+
+
+  
 
   // Runs a single simulation step
   const runTurn = () => {
@@ -176,6 +184,57 @@ const Simulation = () => {
               }
             />
             {simulationParameters.fatalityRate}%
+          </label>
+          <label>
+          incubationPeriod
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value={simulationParameters.incubationPeriod}
+              onChange={(e) =>
+                setSimulationParameters({
+                  ...simulationParameters,
+                  incubationPeriod: parseFloat(e.target.value),
+                })
+              }
+            />
+            {simulationParameters.incubationPeriod}%
+          </label> 
+          <label>
+          vaccinationRate:
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value={simulationParameters.vaccinationRate}
+              onChange={(e) =>
+                setSimulationParameters({
+                  ...simulationParameters,
+                  vaccinationRate: parseFloat(e.target.value),
+                })
+              }
+            />
+            {simulationParameters.vaccinationRate}%
+          </label>
+          <label>
+          vaccineEffectiveness:
+            <input
+              type="range"
+              min="0"
+              max="100"
+              step="1"
+              value={simulationParameters.vaccineEffectiveness}
+              onChange={(e) =>
+                setSimulationParameters({
+                  ...simulationParameters,
+                  vaccineEffectiveness: parseFloat(e.target.value),
+                })
+              }
+            />
+            {simulationParameters.vaccineEffectiveness}%
           </label>
         </div>
       </section>
